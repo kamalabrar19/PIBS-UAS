@@ -1,0 +1,138 @@
+/* css/styles.css */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, footer {
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+header .logo img {
+    max-height: 50px;
+    margin-right: 20px;
+}
+
+header .site-info h1 {
+    margin-bottom: 5px;
+}
+
+header .site-info p, header .site-info span,
+footer p, footer span {
+    margin: 2px 0;
+}
+
+main {
+    display: flex;
+    flex: 1;
+}
+
+.side-nav {
+    width: 25%;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.side-nav ul {
+    list-style: none;
+}
+
+.side-nav ul li {
+    margin-bottom: 10px;
+}
+
+.side-nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.aside {
+    width: 25%;
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+.content {
+    width: 50%;
+    padding: 20px;
+}
+
+footer {
+    text-align: center;
+}
+
+.login-container {
+    width: 300px;
+    margin: 100px auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-container label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.login-container .error {
+    color: red;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
