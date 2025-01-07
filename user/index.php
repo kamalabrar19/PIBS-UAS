@@ -2,20 +2,19 @@
 // admin/index.php
 require_once '../config.php';
 
-// Cek apakah user sudah login dan role-nya 'user'
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
+// Cek apakah user sudah login dan role-nya 'admin'
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header('Location: ../login.php');
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard User</title>
-    <!-- CSS Inline -->
+    <title>Dashboard Admin</title>
+    <!-- CSS Internal -->
     <style>
         /* Reset dasar */
         * {
@@ -27,19 +26,17 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
-            color: #333;
         }
 
         /* Header */
         header {
             width: 100%;
-            background: linear-gradient(135deg, #004aad, #007bff);
+            background-color: #333;
             color: #fff;
-            padding: 15px 20px;
+            padding: 10px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .logo img {
@@ -48,67 +45,64 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
             margin-right: 15px;
         }
 
-        .site-info {
-            display: flex;
-            flex-direction: column;
-        }
-
         .site-info h1 {
             font-size: 24px;
             margin-bottom: 5px;
         }
 
-        .site-info p {
+        .site-info p, .site-info span {
             font-size: 14px;
-            margin: 0;
-            opacity: 0.9;
-        }
-
-        footer {
-            width: 100%;
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            text-align: center;
         }
 
         /* Layout Utama */
         main {
             display: flex;
+            flex-wrap: wrap; /* Memungkinkan elemen untuk membungkus ke baris berikutnya */
             min-height: 80vh;
         }
 
-        /* Nav di Kiri (25%) */
+        /* Side Navigation */
         .side-nav {
             width: 25%;
-            background-color: #fff;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            min-height: 600px; /* Sesuaikan jika diperlukan */
             padding: 20px;
-            border-right: 1px solid #ddd;
+            box-sizing: border-box; /* Pastikan padding dihitung dalam width */
+            font-family: Arial, sans-serif;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         }
 
         .side-nav ul {
-            list-style: none;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
         }
 
-        .side-nav ul li {
-            margin-bottom: 15px;
+        .side-nav li {
+            margin-bottom: 10px;
         }
 
-        .side-nav ul li a {
+        .side-nav a {
+            color: #ecf0f1;
             text-decoration: none;
-            color: #333;
-            font-size: 16px;
-            transition: color 0.3s;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            transition: background 0.3s, color 0.3s;
+            border-radius: 4px;
         }
 
-        .side-nav ul li a:hover {
-            color: #007bff;
+        .side-nav a:hover {
+            background-color: #34495e;
+            color: #fff;
         }
 
-        /* Konten di Tengah (50%) */
+        /* Content Section */
         .content {
             width: 50%;
             padding: 20px;
+            background-color: #fff;
         }
 
         .content h2 {
@@ -121,47 +115,117 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
             color: #555;
         }
 
-        /* Aside di Kanan (25%) */
-        .aside {
+        /* Aside Section */
+        .aside-admin {
             width: 25%;
-            background-color: #fff;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            min-height: 600px; /* Sesuaikan jika diperlukan */
             padding: 20px;
-            border-left: 1px solid #ddd;
+            box-sizing: border-box; /* Pastikan padding dihitung dalam width */
+            font-family: Arial, sans-serif;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Bayangan ke kiri */
         }
 
-        .aside h3 {
-            margin-bottom: 10px;
-            color: #333;
+        .aside-admin h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
         }
 
-        .aside p {
-            font-size: 14px;
-            color: #555;
+        .aside-admin p {
+            font-size: 16px;
+            margin-bottom: 20px;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            main {
-                flex-direction: column;
+        .aside-admin ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .aside-admin li {
+            margin-bottom: 15px;
+        }
+
+        .aside-admin a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            background-color: #34495e;
+            border-radius: 4px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .aside-admin a:hover {
+            background-color: #2c3e50;
+            color: #fff;
+        }
+
+        /* Footer */
+        footer {
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+        }
+
+        /* ====== Responsivitas ====== */
+
+        /* Tablet */
+        @media (max-width: 992px) and (min-width: 768px) {
+            .side-nav {
+                width: 25%;
+                border-right: 1px solid #ddd;
+                border-bottom: none;
             }
 
-            .side-nav, .aside {
+            .content {
+                width: 75%;
+            }
+
+            .aside-admin {
+                width: 100%;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                margin-top: 20px; /* Memberi jarak atas aside */
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 767px) {
+            .side-nav,
+            .content,
+            .aside-admin {
                 width: 100%;
                 border: none;
+                padding: 15px;
+            }
+
+            main {
+                flex-direction: column; /* Menyusun elemen secara vertikal */
+            }
+
+            .aside-admin {
+                margin-top: 20px; /* Memberi jarak atas aside */
             }
         }
     </style>
-</head>
+</head> 
 <body>
     <?php include '../includes/header.php'; ?>
     <main>
-        <?php include '../includes/nav_user.php'; ?>
+        <?php include '../includes/nav_admin.php'; ?>
         <section class="content">
-            <h2>Selamat Datang, User</h2>
-            <p>Ini adalah halaman dashboard user.</p>
+            <h2>Selamat Datang, Admin</h2>
+            <p>Ini adalah halaman dashboard admin.</p>
             <!-- Konten lainnya -->
         </section>
-        <?php include '../includes/aside_user.php'; ?>
+        <?php include '../includes/aside_admin.php'; ?>
     </main>
     <?php include '../includes/footer.php'; ?>
 </body>

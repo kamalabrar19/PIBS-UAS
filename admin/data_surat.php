@@ -125,6 +125,7 @@ if (isset($_GET['delete_id'])) {
             padding: 10px 20px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
         }
 
         footer {
@@ -139,30 +140,161 @@ if (isset($_GET['delete_id'])) {
 
         main {
             display: flex;
+            flex-wrap: wrap; /* Memungkinkan elemen untuk membungkus ke baris berikutnya */
             min-height: 80vh;
         }
 
+        /* Side Navigation */
         .side-nav {
             width: 25%;
-            background-color: #fff;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            min-height: 600px; /* Sesuaikan jika diperlukan */
             padding: 20px;
-            border-right: 1px solid #ddd;
+            box-sizing: border-box; /* Pastikan padding dihitung dalam width */
+            font-family: Arial, sans-serif;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         }
 
+        .side-nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .side-nav li {
+            margin-bottom: 10px;
+        }
+
+        .side-nav a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            transition: background 0.3s, color 0.3s;
+            border-radius: 4px;
+        }
+
+        .side-nav a:hover {
+            background-color: #34495e;
+            color: #fff;
+        }
+
+        /* Content Section */
         .content {
             width: 50%;
             padding: 20px;
+            background-color: #fff;
         }
 
+        /* Aside Section */
+        .aside {
+            width: 25%;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            min-height: 600px; /* Sesuaikan jika diperlukan */
+            padding: 20px;
+            box-sizing: border-box; /* Pastikan padding dihitung dalam width */
+            font-family: Arial, sans-serif;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Bayangan ke kiri */
+        }
+
+        .aside h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .aside p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .aside ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .aside li {
+            margin-bottom: 15px;
+        }
+
+        .aside a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            background-color: #34495e;
+            border-radius: 4px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .aside a:hover {
+            background-color: #2c3e50;
+            color: #fff;
+        }
+
+        /* ====== Responsivitas ====== */
+
+        /* Tablet */
+        @media (max-width: 992px) and (min-width: 768px) {
+            .side-nav {
+                width: 25%;
+                border-right: 1px solid #ddd;
+                border-bottom: none;
+            }
+
+            .content {
+                width: 75%;
+            }
+
+            .aside {
+                width: 100%;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                margin-top: 20px; /* Memberi jarak atas aside */
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 767px) {
+            .side-nav,
+            .content,
+            .aside {
+                width: 100%;
+                border: none;
+                padding: 15px;
+            }
+
+            main {
+                flex-direction: column; /* Menyusun elemen secara vertikal */
+            }
+
+            .aside {
+                margin-top: 20px; /* Memberi jarak atas aside */
+            }
+        }
+
+        /* ====== Gaya Tabel dan Komponen Lainnya Tetap ====== */
+
+        /* CRUD Table */
         .crud-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
+            overflow-x: auto;
         }
 
         .crud-table th, .crud-table td {
             border: 1px solid #ddd;
             padding: 10px;
+            text-align: left;
+        }
+
+        .crud-table th {
+            background-color: #f4f4f4;
         }
 
         .crud-table a {
@@ -182,12 +314,13 @@ if (isset($_GET['delete_id'])) {
             cursor: pointer;
             text-align: center;
             font-size: 14px;
+            border: none;
+            margin-right: 5px;
         }
 
         .edit-btn {
             background-color: #28a745;
             color: white;
-            border: none;
         }
 
         .edit-btn:hover {
@@ -197,21 +330,13 @@ if (isset($_GET['delete_id'])) {
         .delete-btn {
             background-color: #dc3545;
             color: white;
-            border: none;
         }
 
         .delete-btn:hover {
             background-color: #c82333;
         }
 
-        .aside {
-            width: 25%;
-            background-color: #fff;
-            padding: 20px;
-            border-left: 1px solid #ddd;
-        }
-
-        /* ====== Tambahan CSS untuk Modal Popup ====== */
+        /* ====== Tambahan CSS untuk Modal Popup Tetap Tetap ====== */
         .modal {
             display: none; 
             position: fixed; 
@@ -223,6 +348,7 @@ if (isset($_GET['delete_id'])) {
             overflow: auto; 
             background-color: rgba(0,0,0,0.5); 
         }
+
         .modal-content {
             background-color: #fefefe;
             margin: 5% auto;
@@ -231,6 +357,7 @@ if (isset($_GET['delete_id'])) {
             width: 50%;
             border-radius: 5px;
         }
+
         .close {
             color: #aaa;
             float: right;
@@ -238,11 +365,13 @@ if (isset($_GET['delete_id'])) {
             font-weight: bold;
             cursor: pointer;
         }
+
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
         }
+
         .modal form input[type="text"],
         .modal form textarea,
         .modal form select {
@@ -252,9 +381,11 @@ if (isset($_GET['delete_id'])) {
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+
         .modal form input[type="file"] {
             margin-bottom: 15px;
         }
+
         .modal form button {
             padding: 10px 15px;
             background-color: #007BFF;
@@ -263,12 +394,31 @@ if (isset($_GET['delete_id'])) {
             border-radius: 4px;
             cursor: pointer;
         }
+
         .modal form button:hover {
             background-color: #0056b3;
         }
+
         .error-message {
             color: red;
             margin-bottom: 15px;
+        }
+
+        /* ====== Responsivitas Tambahan untuk Modal Tetap ====== */
+        @media (max-width: 992px) and (min-width: 768px) {
+            .modal-content {
+                width: 60%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .modal-content {
+                width: 90%;
+            }
+
+            .modal form button {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -281,7 +431,7 @@ if (isset($_GET['delete_id'])) {
             <h2>Data Surat</h2>
 
             <!-- Tombol Baru untuk Popup Tambah Surat -->
-            <button class="edit-btn" id="openAddModalBtn">Tambah Surat </button>
+            <button class="edit-btn" id="openAddModalBtn">Tambah Surat</button>
 
             <!-- Tampilkan error jika ada -->
             <?php if (isset($error)): ?>
@@ -388,8 +538,8 @@ if (isset($_GET['delete_id'])) {
                 <label for="edit_type">Jenis Surat:</label>
                 <select id="edit_type" name="type" required>
                     <option value="">Pilih Jenis</option>
-                    <option value="internal" <?= (isset($_POST['type']) && $_POST['type'] === 'internal') ? 'selected' : '' ?>>Internal</option>
-                    <option value="external" <?= (isset($_POST['type']) && $_POST['type'] === 'external') ? 'selected' : '' ?>>External</option>
+                    <option value="internal">Internal</option>
+                    <option value="external">External</option>
                 </select>
 
                 <label for="edit_pdf_file">File PDF (Jika tidak diubah, kosongkan):</label>
